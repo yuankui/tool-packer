@@ -54,9 +54,18 @@ def read_files(py_files):
     return file_dict
 
 
+def usage():
+    print """usage:
+    packer [src_file...] target_file"""
+
+
 def run(args):
+    if len(args) <= 1:
+        usage()
+        sys.exit(1)
     files = os.listdir('.')
     target_file = open(args[-1], 'w')
+
     if len(args) > 2:
         files = args[1:-1]
 
@@ -67,6 +76,7 @@ def run(args):
 
     target_content = template.replace('{JSON_CONTENT}', json_content.encode('string_escape'))
     target_file.write(target_content)
+
 
 if __name__ == '__main__':
     run(sys.argv)
